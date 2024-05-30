@@ -1,10 +1,8 @@
-import 'dart:convert';
-
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:news_app/model/my_model.dart';
-
+import 'package:news_app/controller/home_screen_controler.dart';
+import 'package:provider/provider.dart';
 import '../utilis/text_const.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,117 +13,164 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //
-  Map<String, dynamic> decodeData = {};
-  MyClass objClass = MyClass();
-  //
-  fetchdata() async {
-    final url = Uri.parse(
-        "https://newsapi.org/v2/everything?q=tesla&from=2024-04-29&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770");
-
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      decodeData = jsonDecode(response.body);
-      objClass = MyClass.fromJson(decodeData);
-      setState(() {});
-    } else {
-      print("invalid API");
-    }
-  }
-
+  //search bar
+  String searchValue = '';
   //
   @override
   void initState() {
-    fetchdata();
+    getData();
     super.initState();
+  }
+
+  //
+  Future<void> getData() async {
+    Provider.of<HomeScreenController>(context, listen: false).fetchdata();
   }
 
   @override
   Widget build(BuildContext context) {
+    final homeScreenController = Provider.of<HomeScreenController>(context);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
+      backgroundColor: Colors.black87,
+      appBar: EasySearchBar(
+        openOverlayOnSearch: true,
+        onSuggestionTap: (data) {},
+        suggestions: [
+          homeScreenController.objClass.articles?.toString() ?? "",
+        ],
+
+        suggestionBuilder: (data) => Container(
+          height: 900,
+          width: double.infinity,
+          color: Colors.amber,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+          size: 35,
+        ),
+        searchBackIconTheme: IconThemeData.fallback(),
+        searchClearIconTheme: IconThemeData.fallback(),
+        isFloating: true,
+        searchCursorColor: Colors.black,
+        searchBackgroundColor: Colors.grey.shade200,
+        animationDuration: Duration(milliseconds: 450),
+        debounceDuration: Duration(milliseconds: 400),
+        searchHintText: " Search here...",
+        searchHintStyle: TextStyle(
+          color: Colors.grey.shade800,
+          fontSize: 18,
+        ),
+        foregroundColor: Colors.grey.shade200,
+        onSearch: (value) => setState(() => searchValue = searchValue),
+        backgroundColor: Colors.black,
         elevation: 1,
-        toolbarHeight: 80,
+        appBarHeight: 80,
         leading: IconButton(
           onPressed: () {},
           icon: Icon(
             Icons.menu,
             size: 30,
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
-        title: Text("NewsX",
-            style: GoogleFonts.abyssinicaSil(
-              textStyle: TextStyle(
-                color: Colors.black,
-                fontSize: 40,
-                fontWeight: FontWeight.w600,
-              ),
-            )),
-        centerTitle: true,
+        title: Center(
+          child: Text("NewsX",
+              style: GoogleFonts.abyssinicaSil(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                ),
+              )),
+        ),
+        //search button
       ),
-      body: ListView.builder(
-        itemCount: objClass.totalResults,
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            //  height: 350,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.black12.withOpacity(.09),
-                borderRadius: BorderRadius.circular(30)),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    height: 200,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Colors.red,
-                        image: DecorationImage(
-                            image: NetworkImage(
-                              //"https://overclockers.ru/st/legacy/blog/413830/520779_O.jpg"
-                              objClass.articles![index].urlToImage ?? "",
-                            ),
-                            fit: BoxFit.cover)),
-                  ),
-                ),
-                Text(
-                  objClass.articles![index].title.toString(),
-                  style: TextConst.heading,
-                  textAlign: TextAlign.center,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    objClass.articles![index].description.toString(),
-                    style: TextConst.description,
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: homeScreenController.isloading == true
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: homeScreenController.objClass.totalResults,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  //  height: 350,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Column(
                     children: [
-                      Text(
-                        objClass.articles![index].author.toString(),
-                        style: TextConst.authorName,
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.red,
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    //"https://overclockers.ru/st/legacy/blog/413830/520779_O.jpg"
+                                    homeScreenController.objClass
+                                            .articles?[index].urlToImage ??
+                                        "",
+                                    scale: 1),
+                                fit: BoxFit.cover),
+                          ),
+                          /* child: CachedNetworkImage(
+                            imageUrl: homeScreenController
+                                    .objClass.articles?[index].urlToImage ??
+                                "",
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                                Center(child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ), */
+                        ),
                       ),
-                      Text(objClass.articles![index].publishedAt.toString()),
+                      Text(
+                        homeScreenController.objClass.articles?[index].title ??
+                            "",
+                        style: TextConst.heading,
+                        textAlign: TextAlign.center,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          homeScreenController
+                                  .objClass.articles?[index].description ??
+                              "",
+                          style: TextConst.description,
+                          textAlign: TextAlign.justify,
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              homeScreenController
+                                      .objClass.articles?[index].author ??
+                                  "",
+                              style: TextConst.authorName,
+                            ),
+                            Text(homeScreenController
+                                    .objClass.articles?[index].publishedAt
+                                    .toString() ??
+                                ""),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }
