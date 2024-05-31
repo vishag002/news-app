@@ -1,5 +1,8 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/controller/search_controller.dart';
+import 'package:news_app/utilis/text_const.dart';
+import 'package:provider/provider.dart';
 
 class FavouriteScreen extends StatefulWidget {
   const FavouriteScreen({super.key});
@@ -9,48 +12,142 @@ class FavouriteScreen extends StatefulWidget {
 }
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
-  String searchValue = "";
+  final searchViewController = TextEditingController();
+  /* @override
+  void initState() {
+    getData();
+    super.initState();
+  } */
+
   //
-  final List<String> _suggestions = [
-    'Afeganistan',
-    'Albania',
-    'Algeria',
-    'Australia',
-    'Brazil',
-    'German',
-    'Madagascar',
-    'Mozambique',
-    'Portugal',
-    'Zambia'
-  ];
-
-  Future<List<String>> _fetchSuggestions(String searchValue) async {
-    await Future.delayed(const Duration(milliseconds: 750));
-
-    return _suggestions.where((element) {
-      return element.toLowerCase().contains(searchValue.toLowerCase());
-    }).toList();
-  }
+  /* Future<void> getData() async {
+   
+  } */
 
   @override
   Widget build(BuildContext context) {
+    final searchPageController = Provider.of<SearchPageController>(context);
+
     return Scaffold(
-      appBar: EasySearchBar(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.black,
-          animationDuration: const Duration(milliseconds: 450),
-          debounceDuration: const Duration(milliseconds: 400),
-          title: Center(
-              child:
-                  const Text('Example', style: TextStyle(color: Colors.white))),
-          onSearch: (value) => setState(() => searchValue = value),
-          asyncSuggestions: (value) async => await _fetchSuggestions(value)),
-      body: Center(
-        child: Text(
-          "favourite Screen",
-          style: TextStyle(fontSize: 30),
+        appBar: AppBar(
+          toolbarHeight: 80,
+          backgroundColor: Colors.white,
+          title: Padding(
+            padding: const EdgeInsets.all(28.0),
+            child: TextField(
+              //controller from provider
+              controller: searchViewController,
+
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+              ),
+              textAlign: TextAlign.justify,
+              cursorColor: Colors.black,
+              showCursor: false,
+              decoration: InputDecoration(
+                // enabledBorder: InputBorder.none,
+
+                focusColor: Colors.black,
+                hoverColor: Colors.black,
+                fillColor: Colors.amber,
+                hintText: "Search here...",
+                hintStyle: TextStyle(
+                  fontSize: 18,
+                ),
+                floatingLabelAlignment: FloatingLabelAlignment.center,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                alignLabelWithHint: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Provider.of<SearchPageController>(context, listen: false)
+                      .searchData(
+                          searchingData:
+                              searchViewController.text.toLowerCase());
+                },
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                  size: 30,
+                  weight: 100,
+                ))
+          ],
         ),
-      ),
-    );
+        body: ListView.builder(
+          itemCount: searchPageController.myObjClass.totalResults,
+          itemBuilder: (context, index) => Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200,
+                  width: double.infinity,
+                  // color: Colors.amberAccent,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          width: 140,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(searchPageController
+                                      .myObjClass.articles?[index].urlToImage ??
+                                  ""),
+                              fit: BoxFit.cover,
+                              scale: 1,
+                            ),
+                          ),
+                          // color: Colors.black,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(height: 10),
+                          Container(
+                            //   transformAlignment: Alignment.,
+                            height: 135,
+                            width: 220,
+                            // color: Colors.cyan,
+                            child: Text(
+                              searchPageController
+                                      .myObjClass.articles?[index].title ??
+                                  "",
+                              overflow: TextOverflow.clip,
+                              style: TextConst.heading,
+                              textAlign: TextAlign.justify,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              searchPageController
+                                      .myObjClass.articles?[index].author ??
+                                  "",
+                              overflow: TextOverflow.ellipsis,
+                              style: TextConst.authorName,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
