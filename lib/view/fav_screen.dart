@@ -1,17 +1,18 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:news_app/controller/search_controller.dart';
 import 'package:news_app/utilis/text_const.dart';
 import 'package:provider/provider.dart';
 
-class FavouriteScreen extends StatefulWidget {
-  const FavouriteScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
 
   @override
-  State<FavouriteScreen> createState() => _FavouriteScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _FavouriteScreenState extends State<FavouriteScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   final searchViewController = TextEditingController();
   /* @override
   void initState() {
@@ -30,8 +31,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
 
     return Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.white,
           toolbarHeight: 80,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           title: Padding(
             padding: const EdgeInsets.all(28.0),
             child: TextField(
@@ -39,29 +41,42 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               controller: searchViewController,
 
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.justify,
-              cursorColor: Colors.black,
+              cursorColor: Colors.white,
               showCursor: false,
               decoration: InputDecoration(
                 // enabledBorder: InputBorder.none,
-
-                focusColor: Colors.black,
-                hoverColor: Colors.black,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                    width: 1,
+                  ),
+                  gapPadding: 50,
+                ),
+                focusColor: Colors.white,
+                hoverColor: Colors.white,
                 fillColor: Colors.amber,
                 hintText: "Search here...",
                 hintStyle: TextStyle(
+                  color: Colors.white,
                   fontSize: 18,
                 ),
                 floatingLabelAlignment: FloatingLabelAlignment.center,
                 focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.white,
+                    width: 1,
+                  ),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
@@ -77,7 +92,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 },
                 icon: Icon(
                   Icons.search,
-                  color: Colors.black,
+                  color: Colors.white,
                   size: 30,
                   weight: 100,
                 ))
