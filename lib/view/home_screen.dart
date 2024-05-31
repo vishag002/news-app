@@ -1,4 +1,3 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
@@ -13,8 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  //search bar
-  String searchValue = '';
   //
   @override
   void initState() {
@@ -32,39 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeScreenController = Provider.of<HomeScreenController>(context);
     return Scaffold(
       backgroundColor: Colors.black87,
-      appBar: EasySearchBar(
-        openOverlayOnSearch: true,
-        onSuggestionTap: (data) {},
-        suggestions: [
-          homeScreenController.objClass.articles?.toString() ?? "",
-        ],
-
-        suggestionBuilder: (data) => Container(
-          height: 900,
-          width: double.infinity,
-          color: Colors.amber,
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.white,
-          size: 35,
-        ),
-        searchBackIconTheme: IconThemeData.fallback(),
-        searchClearIconTheme: IconThemeData.fallback(),
-        isFloating: true,
-        searchCursorColor: Colors.black,
-        searchBackgroundColor: Colors.grey.shade200,
-        animationDuration: Duration(milliseconds: 450),
-        debounceDuration: Duration(milliseconds: 400),
-        searchHintText: " Search here...",
-        searchHintStyle: TextStyle(
-          color: Colors.grey.shade800,
-          fontSize: 18,
-        ),
-        foregroundColor: Colors.grey.shade200,
-        onSearch: (value) => setState(() => searchValue = searchValue),
+      appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 1,
-        appBarHeight: 80,
+        toolbarHeight: 80,
         leading: IconButton(
           onPressed: () {},
           icon: Icon(
@@ -73,16 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.white,
           ),
         ),
-        title: Center(
-          child: Text("NewsX",
-              style: GoogleFonts.abyssinicaSil(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40,
-                  fontWeight: FontWeight.w600,
-                ),
-              )),
-        ),
+        centerTitle: true,
+        title: Text("NewsX",
+            style: GoogleFonts.abyssinicaSil(
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 40,
+                fontWeight: FontWeight.w600,
+              ),
+            )),
         //search button
       ),
       body: homeScreenController.isloading == true
@@ -156,12 +123,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               homeScreenController
                                       .objClass.articles?[index].author ??
                                   "",
+                              overflow: TextOverflow.fade,
                               style: TextConst.authorName,
                             ),
-                            Text(homeScreenController
-                                    .objClass.articles?[index].publishedAt
-                                    .toString() ??
-                                ""),
+                            Text(
+                                homeScreenController
+                                        .objClass.articles?[index].publishedAt
+                                        .toString() ??
+                                    "",
+                                overflow: TextOverflow.fade),
                           ],
                         ),
                       ),
