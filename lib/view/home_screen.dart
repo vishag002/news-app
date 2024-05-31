@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
+import 'package:news_app/view/fav_screen.dart';
+import 'package:news_app/view/news_view.dart';
 import 'package:provider/provider.dart';
 import '../utilis/text_const.dart';
 
@@ -30,6 +32,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(),
+                    ));
+              },
+              icon: Icon(
+                Icons.search_rounded,
+                color: Colors.white,
+                size: 35,
+              ))
+        ],
         backgroundColor: Colors.black,
         elevation: 1,
         toolbarHeight: 80,
@@ -60,83 +77,93 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: homeScreenController.objClass.totalResults,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  //  height: 350,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          height: 200,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.red,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    //"https://overclockers.ru/st/legacy/blog/413830/520779_O.jpg"
-                                    homeScreenController.objClass
-                                            .articles?[index].urlToImage ??
-                                        "",
-                                    scale: 1),
-                                fit: BoxFit.cover),
-                          ),
-                          /* child: CachedNetworkImage(
-                            imageUrl: homeScreenController
-                                    .objClass.articles?[index].urlToImage ??
-                                "",
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ), */
-                        ),
-                      ),
-                      Text(
-                        homeScreenController.objClass.articles?[index].title ??
-                            "",
-                        style: TextConst.heading,
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          homeScreenController
-                                  .objClass.articles?[index].description ??
-                              "",
-                          style: TextConst.description,
-                          textAlign: TextAlign.justify,
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              homeScreenController
-                                      .objClass.articles?[index].author ??
-                                  "",
-                              overflow: TextOverflow.fade,
-                              style: TextConst.authorName,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NewsViewScreen(),
+                        ));
+                  },
+                  child: Container(
+                    //  height: 350,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            height: 200,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.red,
+                              image: DecorationImage(
+                                  image: NetworkImage(
+                                      //"https://overclockers.ru/st/legacy/blog/413830/520779_O.jpg"
+                                      homeScreenController.objClass
+                                              .articles?[index].urlToImage ??
+                                          "",
+                                      scale: 1),
+                                  fit: BoxFit.cover),
                             ),
-                            Text(
-                                homeScreenController
-                                        .objClass.articles?[index].publishedAt
-                                        .toString() ??
+                            /* child: CachedNetworkImage(
+                                imageUrl: homeScreenController
+                                        .objClass.articles?[index].urlToImage ??
                                     "",
-                                overflow: TextOverflow.fade),
-                          ],
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    Center(child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ), */
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                    ],
+                        Text(
+                          homeScreenController
+                                  .objClass.articles?[index].title ??
+                              "",
+                          style: TextConst.heading,
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Text(
+                            homeScreenController
+                                    .objClass.articles?[index].description ??
+                                "",
+                            style: TextConst.description,
+                            textAlign: TextAlign.justify,
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                homeScreenController
+                                        .objClass.articles?[index].author ??
+                                    "",
+                                overflow: TextOverflow.fade,
+                                style: TextConst.authorName,
+                              ),
+                              Text(
+                                  homeScreenController
+                                          .objClass.articles?[index].publishedAt
+                                          .toString() ??
+                                      "",
+                                  overflow: TextOverflow.fade),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   ),
                 ),
               ),
