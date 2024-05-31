@@ -26,7 +26,7 @@ class _NavBarScreeState extends State<NavBarScree> {
   //pages list
   List pages = [
     HomeScreen(),
-    FavouriteScreen(),
+    SearchScreen(),
     ProfileScreen(),
   ];
 
