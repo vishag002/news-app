@@ -1,8 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_app/controller/category_controller.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
-import 'package:news_app/view/fav_screen.dart';
+import 'package:news_app/view/category_sceen.dart';
 import 'package:news_app/view/news_view.dart';
+import 'package:news_app/view/search_screen.dart';
 import 'package:provider/provider.dart';
 import '../utilis/text_const.dart';
 
@@ -29,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeScreenController = Provider.of<HomeScreenController>(context);
+    final categoryController = Provider.of<CategryPageController>(context);
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
@@ -50,14 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black,
         elevation: 1,
         toolbarHeight: 80,
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.menu,
-            size: 30,
-            color: Colors.white,
-          ),
-        ),
+
         centerTitle: true,
         title: Text("NewsX",
             style: GoogleFonts.abyssinicaSil(
@@ -168,6 +166,38 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+      //drawer
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: ListView.separated(
+          itemBuilder: (context, index) => ListTile(
+              onTap: () {
+                /* categoryController
+                    .selectedNewsId(categoryController.categoryList[index]); */
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryScreen(),
+                    ));
+              },
+              title: Text(
+                categoryController.categoryList[index].toString(),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              )),
+          separatorBuilder: (context, index) => Divider(
+            thickness: 1,
+            color: Colors.white.withOpacity(0.2),
+            endIndent: 50,
+          ),
+          itemCount: categoryController.categoryList.length,
+        ),
+      ),
     );
   }
 }
+
+///////////
+///
