@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/utilis/color_const.dart';
 import 'package:news_app/view/fav_screen.dart';
 import 'package:news_app/view/home_screen.dart';
@@ -26,7 +25,7 @@ class _NavBarScreeState extends State<NavBarScree> {
   //pages list
   List pages = [
     HomeScreen(),
-    SearchScreen(),
+    FavouritesScreen(),
     ProfileScreen(),
   ];
 
