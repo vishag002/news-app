@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/controller/category_controller.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
 import 'package:news_app/controller/search_controller.dart';
 import 'package:news_app/view/botttom_nav_bar_screen.dart';
@@ -12,6 +13,9 @@ void main() {
     ChangeNotifierProvider(
       create: (context) => SearchPageController(),
     ),
+    ChangeNotifierProvider(
+      create: (context) => CategryPageController(),
+    )
   ], child: MyApp()));
 }
 
