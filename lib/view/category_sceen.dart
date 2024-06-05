@@ -17,16 +17,14 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    final categoryController =
-        Provider.of<CategryPageController>(context, listen: false);
-
+    final categoryController = Provider.of<CategryPageController>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         toolbarHeight: 80,
         backgroundColor: ColorConst.background,
         title: Text(
-          categoryController.categoryList[0],
+          "NewsX",
           style: GoogleFonts.abyssinicaSil(
             textStyle: TextStyle(
               color: Colors.white,
@@ -78,7 +76,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           width: 220,
                           // color: Colors.cyan,
                           child: Text(
-                            "fgfgfgfgfg",
+                            categoryController
+                                    .objCategory.articles?[index].title ??
+                                "",
                             overflow: TextOverflow.clip,
                             style: TextConst.heading,
                             textAlign: TextAlign.justify,
