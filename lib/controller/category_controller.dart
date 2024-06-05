@@ -6,7 +6,6 @@ import 'package:news_app/model/my_model.dart';
 class CategryPageController with ChangeNotifier {
   Map<String, dynamic> decodeData = {};
   MyClass objCategory = MyClass();
-  bool isloading = false;
 
   //
   //category list
@@ -22,21 +21,12 @@ class CategryPageController with ChangeNotifier {
     "sports"
   ];
   //
-  /* String _selectedCategory = '';
-
-  String get selectedNews => _selectedCategory;
-
-  void selectedNewsId(String index) {
-    _selectedCategory = index;
-    notifyListeners();
-  } */
 
   Future categoryData({required int index}) async {
     String myNews = categoryList[index].toString();
-    isloading = true;
     notifyListeners();
     final url = Uri.parse(
-      "https://newsapi.org/v2/everything?q=$myNews&from=2024-05-01&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770",
+      "https://newsapi.org/v2/everything?q=$myNews&from=2024-05-05&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770",
     );
 
     final response = await http.get(url);
@@ -47,7 +37,6 @@ class CategryPageController with ChangeNotifier {
       print(response.statusCode.toString());
       print("invalid API");
     }
-    isloading = false;
     notifyListeners();
   }
 }
