@@ -30,6 +30,7 @@ class _SearchScreenState extends State<SearchScreen> {
     final searchPageController = Provider.of<SearchPageController>(context);
 
     return Scaffold(
+        //backgroundColor: Colors.grey.shade900,
         appBar: AppBar(
           foregroundColor: Colors.white,
           toolbarHeight: 80,
@@ -105,15 +106,19 @@ class _SearchScreenState extends State<SearchScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  height: 200,
+                  height: 205,
                   width: double.infinity,
-                  // color: Colors.amberAccent,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                   child: Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: Container(
-                          width: 140,
+                          height: 150,
+                          width: 130,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(searchPageController
@@ -127,31 +132,34 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           SizedBox(height: 10),
                           Container(
                             //   transformAlignment: Alignment.,
-                            height: 135,
+                            // height: 135,
                             width: 220,
                             // color: Colors.cyan,
                             child: Text(
                               searchPageController
                                       .myObjClass.articles?[index].title ??
                                   "",
-                              overflow: TextOverflow.clip,
+                              overflow: TextOverflow.fade,
                               style: TextConst.heading,
                               textAlign: TextAlign.justify,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
+                          Container(
+                            //color: Colors.amber,
+                            height: 22,
+                            width: 150,
                             child: Text(
                               searchPageController
                                       .myObjClass.articles?[index].author ??
                                   "",
-                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.end,
+                              overflow: TextOverflow.clip,
                               style: TextConst.authorName,
                             ),
                           )
