@@ -5,7 +5,7 @@ class TextConst {
   static TextStyle heading = GoogleFonts.aBeeZee(
       textStyle: TextStyle(
     color: Colors.black,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
   ));
   static TextStyle description = GoogleFonts.inconsolata(
