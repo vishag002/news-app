@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/utilis/text_const.dart';
 
-class NewsViewScreen extends StatelessWidget {
+class NewsViewScreen extends StatefulWidget {
   const NewsViewScreen({super.key});
 
+  @override
+  State<NewsViewScreen> createState() => _NewsViewScreenState();
+}
+
+class _NewsViewScreenState extends State<NewsViewScreen> {
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,9 +72,13 @@ class NewsViewScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            isFavorite = !isFavorite;
+          });
+        },
         child: Icon(
-          Icons.favorite_border,
+          isFavorite ? Icons.favorite : Icons.favorite_border,
           color: Colors.red,
           size: 50,
         ),
