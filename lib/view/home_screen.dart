@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
-              itemCount: homeScreenController.objClass.totalResults,
+              itemCount: homeScreenController.objClass.articles!.length,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: InkWell(
@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: double.infinity,
                     decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(30)),
+                        borderRadius: BorderRadius.circular(15)),
                     child: Column(
                       children: [
                         Padding(
@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 200,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(10),
                               color: Colors.red,
                               image: DecorationImage(
                                   image: NetworkImage(
@@ -172,9 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView.separated(
           itemBuilder: (context, index) => ListTile(
               onTap: () {
-                /* categoryController
-                    .selectedNewsId(categoryController.categoryList[index]); */
-
                 Navigator.push(
                     context,
                     MaterialPageRoute(
