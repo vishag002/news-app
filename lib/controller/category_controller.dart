@@ -9,16 +9,15 @@ class CategryPageController with ChangeNotifier {
 
   //
   //category list
-  final List categoryList = [
-    "entertainment",
-    "news",
-    "business",
-    "politics",
-    "health",
-    "lifestyle",
-    "features",
-    "international",
-    "sports"
+  List<String> categoryList = [
+    "Sports",
+    "Entertainment",
+    "Business",
+    "Politics",
+    "Health",
+    "Lifestyle",
+    "Features",
+    "International",
   ];
   //
 
