@@ -40,6 +40,8 @@ dependencies:
   provider: ^6.1.2
   cached_network_image: ^3.3.1
   easy_search_bar: ^2.5.0
+  chip_list: ^3.0.0
+  standard_searchbar: ^2.0.0
 
 dev_dependencies:
   flutter_test:
