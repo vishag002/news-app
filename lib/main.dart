@@ -3,6 +3,7 @@ import 'package:news_app/controller/category_controller.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
 import 'package:news_app/controller/search_controller.dart';
 import 'package:news_app/view/home_screen.dart';
+import 'package:news_app/view/hs_new_ui.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: NewHomeScreen(),
       //home: NavBarScree(),
     );
   }
