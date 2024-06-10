@@ -24,14 +24,14 @@ class MyClass {
 }
 
 class Article {
-  Source? source;
-  String? author;
-  String? title;
-  String? description;
-  String? url;
-  String? urlToImage;
-  DateTime? publishedAt;
-  String? content;
+  Source? source; //site name
+  String? author; //autor name
+  String? title; //title of the news
+  String? description; //descriptiom
+  String? url; //news url
+  String? urlToImage; //image url
+  DateTime? publishedAt; //ublish date
+  String? content; //news content
 
   Article({
     this.source,
