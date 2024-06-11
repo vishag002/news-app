@@ -12,7 +12,7 @@ class HomeScreenController with ChangeNotifier {
     isloading = true;
     notifyListeners();
     final url = Uri.parse(
-        "https://newsapi.org/v2/everything?q=tesla&from=2024-05-10&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770");
+        "https://newsapi.org/v2/everything?q=featured&from=2024-05-11&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770");
 
     final response = await http.get(url);
 
@@ -21,7 +21,11 @@ class HomeScreenController with ChangeNotifier {
 
       decodeData = jsonDecode(response.body);
       objClass = MyClass.fromJson(decodeData);
-    } else {
+    }
+    /* else if (response.statusCode == 426) {
+      InvalidErrorScreen();
+    }  */
+    else {
       print(response.statusCode.toString());
       print("invalid API");
     }
