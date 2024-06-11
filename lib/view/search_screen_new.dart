@@ -1,9 +1,10 @@
 import 'package:chip_list/chip_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:news_app/utilis/text_const.dart';
+import 'package:news_app/view/search_view_screen.dart';
 import 'package:provider/provider.dart';
 import '../controller/category_controller.dart';
+import '../controller/search_controller.dart';
 import '../utilis/color_const.dart';
 
 class NewSearchScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class NewSearchScreen extends StatefulWidget {
 }
 
 class _NewSearchScreenState extends State<NewSearchScreen> {
-  TextEditingController searchtextController = TextEditingController();
+  final searchViewController = TextEditingController();
   //
   void onSearchChanged(String value) {
     // Handle search logic here
@@ -24,6 +25,7 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final searchPageController = Provider.of<SearchPageController>(context);
     final categoryController = Provider.of<CategryPageController>(context);
     //print(searchtextController);
     final h1 = MediaQuery.of(context).size.height;
@@ -55,7 +57,7 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                     child: TextFormField(
                       showCursor: false,
                       // cursorHeight: 20,
-                      controller: searchtextController,
+                      controller: searchViewController,
                       style: TextConst.searchText,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
@@ -80,7 +82,18 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                         size: 30,
                       ),
                       onPressed: () {
-                        print("Search button pressed!");
+                        Provider.of<SearchPageController>(context,
+                                listen: false)
+                            .searchData(
+                                searchingData:
+                                    searchViewController.text.toLowerCase());
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchViewScreen(
+                                searchViewController: searchViewController.text,
+                              ),
+                            ));
                       },
                     ),
                   ),
