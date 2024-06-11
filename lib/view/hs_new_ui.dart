@@ -4,10 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/utilis/color_const.dart';
 import 'package:news_app/utilis/text_const.dart';
 import 'package:news_app/view/home_screen.dart';
+import 'package:news_app/view/news_view.dart';
 import 'package:news_app/view/search_screen_new.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/category_controller.dart';
+import '../controller/home_screen_controler.dart';
+import '../model/news_class.dart';
 
 class NewHomeScreen extends StatefulWidget {
   const NewHomeScreen({super.key});
@@ -17,11 +20,24 @@ class NewHomeScreen extends StatefulWidget {
 }
 
 class _NewHomeScreenState extends State<NewHomeScreen> {
+  //featured news
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  //
+  Future<void> getData() async {
+    Provider.of<HomeScreenController>(context, listen: false).fetchdata();
+  }
+
   //search controller
   TextEditingController searchtextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final homeScreenController = Provider.of<HomeScreenController>(context);
     final categoryController = Provider.of<CategryPageController>(context);
     final h1 = MediaQuery.of(context).size.height;
     final w1 = MediaQuery.of(context).size.width;
@@ -147,11 +163,13 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 height: h1 / 3,
                 width: w1,
                 decoration: BoxDecoration(
-                    color: Colors.amber,
+                    //color: Colors.amber,
                     borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
                       image: NetworkImage(
-                          'https://cdn2.slidemodel.com/wp-content/uploads/FF0345-01-breaking-news-presentation-design-1.jpg',
+                          homeScreenController
+                                  .objClass.articles?[0].urlToImage ??
+                              "",
                           scale: 1),
                       fit: BoxFit.cover,
                     )),
@@ -174,23 +192,63 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                               //color: Colors.black,
                               child: Text(
                                 overflow: TextOverflow.ellipsis,
-                                "The heading will be here but if the  blahhhhhhhh line is tooo long the whole sentence will not been showed",
+                                homeScreenController
+                                        .objClass.articles?[0].title ??
+                                    "",
                                 style: TextConst.trendingHeading,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: Container(
-                                height: h1 / 18,
-                                width: w1 / 3,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.black,
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Read now",
-                                    style: TextConst.buttnText,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NewsViewScreen(
+                                          news: News(
+                                            descrition: homeScreenController
+                                                    .objClass
+                                                    .articles?[0]
+                                                    .description ??
+                                                "",
+                                            title: homeScreenController.objClass
+                                                    .articles?[0].title ??
+                                                "",
+                                            content: homeScreenController
+                                                    .objClass
+                                                    .articles?[0]
+                                                    .content ??
+                                                "",
+                                            imageUrl: homeScreenController
+                                                    .objClass
+                                                    .articles?[0]
+                                                    .urlToImage ??
+                                                "",
+                                            author: homeScreenController
+                                                    .objClass
+                                                    .articles?[0]
+                                                    .author ??
+                                                "",
+                                            url: homeScreenController.objClass
+                                                    .articles?[0].url ??
+                                                "",
+                                          ),
+                                        ),
+                                      ));
+                                },
+                                child: Container(
+                                  height: h1 / 18,
+                                  width: w1 / 3,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.black,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      "Read now",
+                                      style: TextConst.buttnText,
+                                    ),
                                   ),
                                 ),
                               ),
