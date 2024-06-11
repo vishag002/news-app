@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_app/controller/category_controller.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
-import 'package:news_app/view/category_sceen.dart';
+import 'package:news_app/model/news_class.dart';
 import 'package:news_app/view/news_view.dart';
 import 'package:news_app/view/search_screen.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final h1 = MediaQuery.of(context).size.height;
+    final w1 = MediaQuery.of(context).size.width;
     final homeScreenController = Provider.of<HomeScreenController>(context);
-    final categoryController = Provider.of<CategryPageController>(context);
+    // final categoryController = Provider.of<CategryPageController>(context);
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
@@ -54,15 +55,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         backgroundColor: Colors.black,
         elevation: 1,
-        toolbarHeight: 80,
-
-        centerTitle: true,
-        title: Text("NewsX",
-            style: GoogleFonts.abyssinicaSil(
+        //toolbarHeight: 80,
+        leading: IconButton(
+          color: Colors.white,
+          iconSize: 30,
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        centerTitle: false,
+        title: Text("Featured News",
+            style: GoogleFonts.abhayaLibre(
               textStyle: TextStyle(
                 color: Colors.white,
                 fontSize: 40,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w400,
               ),
             )),
         //search button
@@ -80,7 +88,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => NewsViewScreen(),
+                          builder: (context) => NewsViewScreen(
+                            news: News(
+                              descrition: homeScreenController
+                                      .objClass.articles?[index].description ??
+                                  "",
+                              title: homeScreenController
+                                      .objClass.articles?[index].title ??
+                                  "",
+                              content: homeScreenController
+                                      .objClass.articles?[index].content ??
+                                  "",
+                              imageUrl: homeScreenController
+                                      .objClass.articles?[index].urlToImage ??
+                                  "",
+                              author: homeScreenController
+                                      .objClass.articles?[index].author ??
+                                  "",
+                              url: homeScreenController
+                                      .objClass.articles?[index].url ??
+                                  "",
+                            ),
+                          ),
                         ));
                   },
                   child: Container(
@@ -92,13 +121,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            height: 200,
-                            width: double.infinity,
+                            height: h1 / 4,
+                            width: w1,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(20),
+                              //color: Colors.red,
                               image: DecorationImage(
                                   image: NetworkImage(
                                       //"https://overclockers.ru/st/legacy/blog/413830/520779_O.jpg"
@@ -120,14 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ), */
                           ),
                         ),
-                        Text(
-                          homeScreenController
-                                  .objClass.articles?[index].title ??
-                              "",
-                          style: TextConst.heading,
-                          textAlign: TextAlign.center,
-                        ),
                         Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Text(
+                            homeScreenController
+                                    .objClass.articles?[index].title ??
+                                "",
+                            style: TextConst.heading,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        /* Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
                             homeScreenController
@@ -136,8 +170,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextConst.description,
                             textAlign: TextAlign.justify,
                           ),
-                        ),
-                        SizedBox(height: 20),
+                        ), */
+                        /* SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
@@ -158,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   overflow: TextOverflow.fade),
                             ],
                           ),
-                        ),
+                        ), */
                         SizedBox(height: 10),
                       ],
                     ),
@@ -167,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
       //drawer
-      drawer: Drawer(
+      /* drawer: Drawer(
         backgroundColor: Colors.black,
         child: ListView.separated(
           itemBuilder: (context, index) => ListTile(
@@ -191,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           itemCount: categoryController.categoryList.length,
         ),
-      ),
+      ), */
     );
   }
 }
