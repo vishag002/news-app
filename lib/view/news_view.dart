@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_app/model/news_class.dart';
 import 'package:news_app/utilis/text_const.dart';
 
 class NewsViewScreen extends StatefulWidget {
-  const NewsViewScreen({super.key});
+  final News news;
+  NewsViewScreen({super.key, required this.news});
 
   @override
   State<NewsViewScreen> createState() => _NewsViewScreenState();
@@ -13,7 +15,9 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
   bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
+    print(widget.news.title);
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
@@ -38,38 +42,84 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
             )),
         //search button
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              height: 300,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                      "https://www.autocar.co.uk/sites/autocar.co.uk/files/styles/gallery_slide/public/images/car-reviews/first-drives/legacy/rolls_royce_phantom_top_10.jpg?itok=XjL9f1tx"), // Replace with a valid image URL
-                  fit: BoxFit.cover,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  height: 300,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.black.withOpacity(0.3)),
+                    image: DecorationImage(
+                      image: NetworkImage(widget.news.imageUrl),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(width: 10),
+                    Container(
+                      width: 250,
+                      //color: Colors.blueAccent,
+                      child: Text(
+                        widget.news.author,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextConst.heading,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.news.title,
+                  textAlign: TextAlign.justify,
+                  style: TextConst.heading,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  widget.news.descrition,
+                  style: TextConst.description,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: widget.news.content,
+                        style: TextConst
+                            .description, // First text style (e.g., normal)
+                      ),
+                      TextSpan(
+                        text: "   Read more....",
+                        style: TextConst
+                            .underline_ui, // Second text style (e.g., bold)
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          Text(
-            "News Title will be shown here",
-            style: TextConst.heading,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              "News Description will be shown here. News Description will be shown here. "
-              "News Description will be shown here. News Description will be shown here. "
-              "News Description will be shown here. News Description will be shown here.",
-              style: TextConst.description,
-            ),
-          )
-        ],
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.transparent,
         elevation: 0,
         onPressed: () {
@@ -78,11 +128,11 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
           });
         },
         child: Icon(
-          isFavorite ? Icons.favorite : Icons.favorite_border,
+          Icons.  ,
           color: Colors.red,
           size: 50,
         ),
-      ),
+      ), */
     );
   }
 }
