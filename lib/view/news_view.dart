@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/model/news_class.dart';
+import 'package:news_app/utilis/color_const.dart';
 import 'package:news_app/utilis/text_const.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsViewScreen extends StatefulWidget {
   final News news;
@@ -13,15 +15,19 @@ class NewsViewScreen extends StatefulWidget {
 
 class _NewsViewScreenState extends State<NewsViewScreen> {
   bool isFavorite = false;
+  //url launcher
+
   @override
   Widget build(BuildContext context) {
+    final Uri url = Uri.parse(widget.news.url);
+
     print(widget.news.title);
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: ColorConst.background,
         elevation: 1,
-        toolbarHeight: 80,
+        //toolbarHeight: 80,
         centerTitle: true,
         leading: IconButton(
             onPressed: () {
@@ -30,12 +36,12 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
             icon: Icon(
               Icons.arrow_back_ios_rounded,
               size: 35,
-              color: Colors.black,
+              color: ColorConst.primary,
             )),
         title: Text("NewsX",
             style: GoogleFonts.abyssinicaSil(
               textStyle: TextStyle(
-                color: Colors.black,
+                color: ColorConst.primary,
                 fontSize: 40,
                 fontWeight: FontWeight.w600,
               ),
@@ -106,11 +112,23 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
                         style: TextConst
                             .description, // First text style (e.g., normal)
                       ),
-                      TextSpan(
-                        text: "   Read more....",
-                        style: TextConst
-                            .underline_ui, // Second text style (e.g., bold)
-                      ),
+                      WidgetSpan(
+                          child: InkWell(
+                        onTap: () {
+                          launchUrl(
+                            browserConfiguration:
+                                BrowserConfiguration(showTitle: true),
+                            mode: LaunchMode.inAppWebView,
+                            webOnlyWindowName: "NewsX",
+                            webViewConfiguration: WebViewConfiguration(),
+                            url,
+                          );
+                        },
+                        child: Text(
+                          "   Read more....",
+                          style: TextConst.underline_ui,
+                        ),
+                      )),
                     ],
                   ),
                 ),
