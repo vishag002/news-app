@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/model/news_class.dart';
 import 'package:news_app/utilis/text_const.dart';
+import 'package:news_app/view/news_view.dart';
 import 'package:provider/provider.dart';
 import '../controller/search_controller.dart';
 import '../utilis/color_const.dart';
@@ -123,83 +125,113 @@ class _SearchViewScreenState extends State<SearchViewScreen> {
                   itemCount: searchPageController.myObjClass.totalResults,
                   itemBuilder: (context, index) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: h1 / 5,
-                      width: w1,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: ColorConst.primary,
-                          border: Border.all(
-                              color: Colors.grey.shade900.withOpacity(0.3))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            height: h1 / 5,
-                            width: w1 / 2.5,
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30)),
-                              image: DecorationImage(
-                                  image: NetworkImage(searchPageController
-                                          .myObjClass
-                                          .articles?[index]
-                                          .urlToImage ??
-                                      ""),
-                                  fit: BoxFit.cover,
-                                  scale: 1),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: w1 - w1 / 1.9,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NewsViewScreen(
+                                  news: News(
+                                title: searchPageController
+                                        .myObjClass.articles?[index].title ??
+                                    "",
+                                content: searchPageController
+                                        .myObjClass.articles?[index].content ??
+                                    "",
+                                imageUrl: searchPageController.myObjClass
+                                        .articles?[index].urlToImage ??
+                                    "",
+                                author: searchPageController
+                                        .myObjClass.articles?[index].author ??
+                                    "",
+                                url: searchPageController
+                                        .myObjClass.articles?[index].url ??
+                                    "",
+                                descrition: searchPageController.myObjClass
+                                        .articles?[index].description ??
+                                    "",
+                              )),
+                            ));
+                      },
+                      child: Container(
+                        height: h1 / 5,
+                        width: w1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: ColorConst.primary,
+                            //color: Colors.amber,
+                            border: Border.all(
+                                color: Colors.grey.shade900.withOpacity(0.3))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
                               height: h1 / 5,
-                              //color: Colors.black,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                //  crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    //height: h1 / 15,
-                                    //color: Colors.amber,
-                                    child: Text(
-                                      maxLines: 2,
-                                      searchPageController.myObjClass
-                                              .articles?[index].title ??
-                                          "",
-                                      style: TextConst.titleText,
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.person_2,
-                                        color: Colors.grey.shade700,
-                                        size: 20,
-                                      ),
-                                      Container(
-                                        width: 170,
-                                        child: Text(
-                                          searchPageController.myObjClass
-                                                  .articles?[index].author ??
-                                              "",
-                                          style: TextConst.authorName,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                              width: w1 / 2.5,
+                              decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    bottomLeft: Radius.circular(30)),
+                                image: DecorationImage(
+                                    image: NetworkImage(searchPageController
+                                            .myObjClass
+                                            .articles?[index]
+                                            .urlToImage ??
+                                        ""),
+                                    fit: BoxFit.cover,
+                                    scale: 1),
                               ),
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: w1 - w1 / 1.9,
+                                height: h1 / 5,
+                                //color: Colors.black,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  //  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      //height: h1 / 15,
+                                      //color: Colors.amber,
+                                      child: Text(
+                                        maxLines: 2,
+                                        searchPageController.myObjClass
+                                                .articles?[index].title ??
+                                            "",
+                                        style: TextConst.titleText,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person_2,
+                                          color: Colors.grey.shade700,
+                                          size: 20,
+                                        ),
+                                        Container(
+                                          width: 170,
+                                          child: Text(
+                                            searchPageController.myObjClass
+                                                    .articles?[index].author ??
+                                                "",
+                                            style: TextConst.authorName,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
