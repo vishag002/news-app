@@ -77,7 +77,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Padding(
+            /* Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
                 height: 55,
@@ -131,7 +131,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                   ],
                 ),
               ),
-            ),
+            ), */
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
