@@ -15,19 +15,40 @@ class NewSearchScreen extends StatefulWidget {
 }
 
 class _NewSearchScreenState extends State<NewSearchScreen> {
-  final searchViewController = TextEditingController();
   //
+  //
+  int selectedIndex = 0;
+  void selectedCategory(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  //
+  Future<void> getCategoryData() async {
+    Provider.of<CategryPageController>(context, listen: false)
+        .categoryData(index: selectedIndex);
+  }
+
+  //search
+  final searchViewController = TextEditingController();
   void onSearchChanged(String value) {
     // Handle search logic here
     //dynamic searchtextController = value;
     //print(searchtextController.toString());
   }
+  @override
+  void initState() {
+    //selectedCategory(selectedIndex);
+    getCategoryData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final searchPageController = Provider.of<SearchPageController>(context);
+    //final searchPageController = Provider.of<SearchPageController>(context);
     final categoryController = Provider.of<CategryPageController>(context);
-    //print(searchtextController);
+    print("selected index is $selectedIndex");
     final h1 = MediaQuery.of(context).size.height;
     final w1 = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -125,7 +146,7 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
               //color: Colors.amber.shade100,
               child: ChipList(
                 listOfChipNames: categoryController.categoryList,
-                listOfChipIndicesCurrentlySelected: [0],
+
                 activeBgColorList: [ColorConst.background],
                 activeTextColorList: [ColorConst.primary],
                 borderRadiiList: [30],
@@ -139,6 +160,11 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                 style: TextConst.heading,
                 supportsMultiSelect: false,
                 showCheckmark: false,
+                listOfChipIndicesCurrentlySelected:
+                    selectedIndex != null ? [selectedIndex!] : [],
+                extraOnToggle: (index) {
+                  selectedCategory(index);
+                },
               ),
             ),
             Expanded(
@@ -163,15 +189,19 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                             height: h1 / 5,
                             width: w1 / 2.5,
                             decoration: BoxDecoration(
-                                color: Colors.black12,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30)),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://www.vidnoz.com/img/ai-video-detail/title-new.png'),
-                                    fit: BoxFit.cover,
-                                    scale: 1)),
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  bottomLeft: Radius.circular(30)),
+                              image: DecorationImage(
+                                  image: NetworkImage(categoryController
+                                          .objCategory
+                                          .articles?[index]
+                                          .urlToImage ??
+                                      ""),
+                                  fit: BoxFit.cover,
+                                  scale: 1),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -189,7 +219,9 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                                     //color: Colors.amber,
                                     child: Text(
                                       maxLines: 2,
-                                      "this is the title of the news but if this is long it will only show thw first  two lines",
+                                      categoryController.objCategory
+                                              .articles?[index].title ??
+                                          "",
                                       style: TextConst.titleText,
                                     ),
                                   ),
@@ -200,11 +232,18 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                                         color: Colors.grey.shade700,
                                         size: 20,
                                       ),
-                                      Text(
-                                        "Autor name",
-                                        style: TextConst.authorName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      SizedBox(width: 10),
+                                      Container(
+                                        width: 150,
+                                        //color: Colors.amber,
+                                        child: Text(
+                                          categoryController.objCategory
+                                                  .articles?[index].author ??
+                                              "",
+                                          style: TextConst.authorName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                     ],
                                   )
