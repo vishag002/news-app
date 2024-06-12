@@ -12,7 +12,7 @@ class SearchPageController with ChangeNotifier {
     isloading = true;
     notifyListeners();
     final url = Uri.parse(
-        "https://newsapi.org/v2/everything?q=$searchingData&from=2024-05-11&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770");
+        "https://newsapi.org/v2/everything?q=$searchingData&from=2024-05-12&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770");
 
     final response = await http.get(url);
     if (response.statusCode == 200) {
