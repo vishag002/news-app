@@ -23,7 +23,7 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
 
     print(widget.news.title);
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: ColorConst.background,
         elevation: 1,
@@ -92,25 +92,27 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
                 child: Text(
                   widget.news.title,
                   textAlign: TextAlign.justify,
-                  style: TextConst.heading,
+                  style: TextConst.newsViewTitle,
                 ),
               ),
+              SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  widget.news.descrition,
-                  style: TextConst.description,
+                  "   ${widget.news.descrition}",
+                  style: TextConst.newsView,
+                  textAlign: TextAlign.justify,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: RichText(
+                  textAlign: TextAlign.justify,
                   text: TextSpan(
                     children: [
                       TextSpan(
                         text: widget.news.content,
-                        style: TextConst
-                            .description, // First text style (e.g., normal)
+                        style: TextConst.newsView,
                       ),
                       WidgetSpan(
                           child: InkWell(
