@@ -25,7 +25,7 @@ class CategryPageController with ChangeNotifier {
     String myNews = categoryList[index].toString();
     notifyListeners();
     final url = Uri.parse(
-      "https://newsapi.org/v2/everything?q=$myNews&from=2024-05-12&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770",
+      "https://newsapi.org/v2/everything?q=$myNews&from=2024-05-19&sortBy=publishedAt&apiKey=b92820ab6aea47f694544921e3535770",
     );
 
     final response = await http.get(url);
