@@ -22,6 +22,7 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
     setState(() {
       selectedIndex = index;
     });
+    getCategoryData();
   }
 
   //
@@ -160,8 +161,7 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                 style: TextConst.heading,
                 supportsMultiSelect: false,
                 showCheckmark: false,
-                listOfChipIndicesCurrentlySelected:
-                    selectedIndex != null ? [selectedIndex!] : [],
+                listOfChipIndicesCurrentlySelected: [selectedIndex],
                 extraOnToggle: (index) {
                   selectedCategory(index);
                 },
@@ -182,12 +182,12 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                           border: Border.all(
                               color: Colors.grey.shade900.withOpacity(0.3))),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Container(
                             height: h1 / 5,
-                            width: w1 / 2.5,
+                            width: w1 / 2.6,
                             decoration: BoxDecoration(
                               color: Colors.black12,
                               borderRadius: BorderRadius.only(
@@ -234,7 +234,7 @@ class _NewSearchScreenState extends State<NewSearchScreen> {
                                       ),
                                       SizedBox(width: 10),
                                       Container(
-                                        width: 150,
+                                        width: w1 / 2.6,
                                         //color: Colors.amber,
                                         child: Text(
                                           categoryController.objCategory
