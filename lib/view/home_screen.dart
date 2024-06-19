@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/controller/home_screen_controler.dart';
 import 'package:news_app/model/news_class.dart';
 import 'package:news_app/view/news_view.dart';
-import 'package:news_app/view/search_screen.dart';
+import 'package:news_app/view/search_screen_new.dart';
 import 'package:provider/provider.dart';
 import '../utilis/text_const.dart';
 
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SearchScreen(),
+                      builder: (context) => NewSearchScreen(),
                     ));
               },
               icon: Icon(
