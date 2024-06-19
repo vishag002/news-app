@@ -24,6 +24,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
   @override
   void initState() {
     getData();
+    getCategoryData();
     super.initState();
   }
 
@@ -34,6 +35,20 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
 
   //search controller
   TextEditingController searchtextController = TextEditingController();
+  //category
+  int selectedIndex = 0;
+  void selectedCategory(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+    getCategoryData();
+  }
+
+  //
+  Future<void> getCategoryData() async {
+    Provider.of<CategryPageController>(context, listen: false)
+        .categoryData(index: selectedIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +308,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
               //color: Colors.amber.shade100,
               child: ChipList(
                 listOfChipNames: categoryController.categoryList,
-                listOfChipIndicesCurrentlySelected: [0],
+                listOfChipIndicesCurrentlySelected: [selectedIndex],
                 activeBgColorList: [ColorConst.background],
                 activeTextColorList: [ColorConst.primary],
                 borderRadiiList: [30],
@@ -303,7 +318,10 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 inactiveTextColorList: [ColorConst.background],
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 scrollPhysics: ClampingScrollPhysics(),
-                //shouldWrap: true,
+                extraOnToggle: (index) {
+                  selectedCategory(index);
+                },
+                shouldWrap: false,
                 style: TextConst.heading,
                 supportsMultiSelect: false,
                 showCheckmark: false,
@@ -314,72 +332,113 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 child: ListView.builder(
                   itemBuilder: (context, index) => Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: h1 / 5,
-                      width: w1,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: ColorConst.primary,
-                          border: Border.all(
-                              color: Colors.grey.shade900.withOpacity(0.3))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            height: h1 / 5,
-                            width: w1 / 2.5,
-                            decoration: BoxDecoration(
-                                color: Colors.black12,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    bottomLeft: Radius.circular(30)),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://www.vidnoz.com/img/ai-video-detail/title-new.png'),
-                                    fit: BoxFit.cover,
-                                    scale: 1)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: w1 - w1 / 1.9,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NewsViewScreen(
+                                  news: News(
+                                title: categoryController
+                                        .objCategory.articles?[index].title ??
+                                    "",
+                                content: categoryController
+                                        .objCategory.articles?[index].content ??
+                                    "",
+                                imageUrl: categoryController.objCategory
+                                        .articles?[index].urlToImage ??
+                                    "",
+                                author: categoryController
+                                        .objCategory.articles?[index].author ??
+                                    "",
+                                url: categoryController
+                                        .objCategory.articles?[index].url ??
+                                    "",
+                                descrition: categoryController.objCategory
+                                        .articles?[index].description ??
+                                    "",
+                              )),
+                            ));
+                      },
+                      child: Container(
+                        height: h1 / 5,
+                        width: w1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: ColorConst.primary,
+                            border: Border.all(
+                                color: Colors.grey.shade900.withOpacity(0.3))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
                               height: h1 / 5,
-                              //color: Colors.black,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                //  crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    //height: h1 / 15,
-                                    //color: Colors.amber,
-                                    child: Text(
-                                      maxLines: 2,
-                                      "this is the title of the news but if this is long it will only show thw first  two lines",
-                                      style: TextConst.titleText,
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.person_2,
-                                        color: Colors.grey.shade700,
-                                        size: 20,
-                                      ),
-                                      Text(
-                                        "Autor name",
-                                        style: TextConst.authorName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                              width: w1 / 2.6,
+                              decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      bottomLeft: Radius.circular(30)),
+                                  image: DecorationImage(
+                                      image: NetworkImage(categoryController
+                                              .objCategory
+                                              .articles?[index]
+                                              .urlToImage ??
+                                          ""),
+                                      fit: BoxFit.cover,
+                                      scale: 1)),
                             ),
-                          )
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                width: w1 - w1 / 1.9,
+                                height: h1 / 5,
+                                //color: Colors.black,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  //  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      //height: h1 / 15,
+                                      //color: Colors.amber,
+                                      child: Text(
+                                        maxLines: 2,
+                                        categoryController.objCategory
+                                                .articles?[index].title ??
+                                            "",
+                                        style: TextConst.titleText,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person_2,
+                                          color: Colors.grey.shade700,
+                                          size: 20,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Container(
+                                          width: w1 / 2.6,
+                                          // color: Colors.amber,
+                                          child: Text(
+                                            categoryController.objCategory
+                                                    .articles?[index].author ??
+                                                "",
+                                            style: TextConst.authorName,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
