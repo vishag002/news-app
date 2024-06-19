@@ -163,12 +163,12 @@ class _SearchViewScreenState extends State<SearchViewScreen> {
                             border: Border.all(
                                 color: Colors.grey.shade900.withOpacity(0.3))),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Container(
                               height: h1 / 5,
-                              width: w1 / 2.5,
+                              width: w1 / 2.6,
                               decoration: BoxDecoration(
                                 color: Colors.black12,
                                 borderRadius: BorderRadius.only(
@@ -214,7 +214,7 @@ class _SearchViewScreenState extends State<SearchViewScreen> {
                                           size: 20,
                                         ),
                                         Container(
-                                          width: 170,
+                                          width: w1 / 2.5,
                                           child: Text(
                                             searchPageController.myObjClass
                                                     .articles?[index].author ??
