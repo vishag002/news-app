@@ -43,6 +43,7 @@ dependencies:
   chip_list: ^3.0.0
   standard_searchbar: ^2.0.0
   url_launcher: ^6.3.0
+  connectivity_plus: ^6.0.3
 
 dev_dependencies:
   flutter_test:
