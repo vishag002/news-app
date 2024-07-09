@@ -1,19 +1,20 @@
-/* // ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:news_app/utilis/color_const.dart';
 import 'package:news_app/view/fav_screen.dart';
-import 'package:news_app/view/home_screen.dart';
 import 'package:news_app/view/profile_screen.dart';
 
-class NavBarScree extends StatefulWidget {
-  const NavBarScree({super.key});
+import 'hs_new_ui.dart';
+
+class NavBarScreen extends StatefulWidget {
+  const NavBarScreen({super.key});
 
   @override
-  State<NavBarScree> createState() => _NavBarScreeState();
+  State<NavBarScreen> createState() => _NavBarScreenState();
 }
 
-class _NavBarScreeState extends State<NavBarScree> {
+class _NavBarScreenState extends State<NavBarScreen> {
   int selectedTab = 0;
   //change tab
   changeTab(int index) {
@@ -24,7 +25,7 @@ class _NavBarScreeState extends State<NavBarScree> {
 
   //pages list
   List pages = [
-    HomeScreen(),
+    NewHomeScreen(),
     FavouritesScreen(),
     ProfileScreen(),
   ];
@@ -50,4 +51,4 @@ class _NavBarScreeState extends State<NavBarScree> {
           ]),
     );
   }
-} */
+}

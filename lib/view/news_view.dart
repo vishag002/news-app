@@ -128,7 +128,7 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
                         },
                         child: Text(
                           "   Read more....",
-                          style: TextConst.underline_ui,
+                          style: TextConst.underlineui,
                         ),
                       )),
                     ],

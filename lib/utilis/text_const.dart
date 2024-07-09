@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TextConst {
@@ -37,7 +38,7 @@ class TextConst {
     fontSize: 21,
     fontWeight: FontWeight.w500,
   ));
-  static TextStyle underline_ui = GoogleFonts.allerta(
+  static TextStyle underlineui = GoogleFonts.allerta(
       textStyle: TextStyle(
           color: Colors.blue,
           fontSize: 15,
@@ -76,5 +77,26 @@ class TextConst {
     color: Colors.black,
     fontSize: 21,
     fontWeight: FontWeight.w500,
+  );
+
+  static TextStyle introWhiteFont = GoogleFonts.pacifico(
+    color: Colors.white,
+    fontSize: 35,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle introRedFont = GoogleFonts.pacifico(
+    color: Colors.red,
+    fontSize: 35,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle introBlackFont = GoogleFonts.pacifico(
+    color: Colors.black,
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle intro_skip = GoogleFonts.allerta(
+    color: Colors.white,
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
   );
 }

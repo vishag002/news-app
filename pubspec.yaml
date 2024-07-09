@@ -44,6 +44,8 @@ dependencies:
   standard_searchbar: ^2.0.0
   url_launcher: ^6.3.0
   connectivity_plus: ^6.0.3
+  introduction_screen: ^3.1.14
+  country_flags: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -68,8 +70,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

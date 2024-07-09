@@ -1,4 +1,4 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/utilis/color_const.dart';
 import 'package:news_app/utilis/text_const.dart';
@@ -87,4 +87,4 @@ class FavouritesScreen extends StatelessWidget {
       ),
     );
   }
-} */
+}
