@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/utilis/color_const.dart';
 import 'package:news_app/utilis/text_const.dart';
-import 'package:news_app/view/fav_screen.dart';
 import 'package:news_app/view/home_screen.dart';
 import 'package:news_app/view/invalidscreen.dart';
 import 'package:news_app/view/news_view.dart';
 import 'package:news_app/view/search_screen_new.dart';
 import 'package:provider/provider.dart';
-
 import '../controller/category_controller.dart';
 import '../controller/home_screen_controler.dart';
 import '../model/news_class.dart';
@@ -77,7 +75,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
         ], */
         backgroundColor: Colors.black,
         elevation: 1,
-        toolbarHeight: 60,
+        toolbarHeight: 80,
 
         centerTitle: true,
         title: Text(
@@ -509,7 +507,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                     ),
                   ),
                 ),
-      floatingActionButton: FloatingActionButton(
+      /* floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.white,
         onPressed: () {
           Navigator.push(
@@ -523,7 +521,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
           size: 60,
           color: Colors.red,
         ),
-      ),
+      ), */
     );
   }
 }

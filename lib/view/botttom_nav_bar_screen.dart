@@ -26,6 +26,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
   //pages list
   List pages = [
     NewHomeScreen(),
+    // NewSearchScreen(),
     FavouritesScreen(),
     ProfileScreen(),
   ];
@@ -45,6 +46,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
           onTap: (value) => changeTab(value),
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+            /* / BottomNavigationBarItem(icon: Icon(Icons.search), label: "search"), */
             BottomNavigationBarItem(
                 icon: Icon(Icons.favorite), label: "favourites"),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: "profile"),

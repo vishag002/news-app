@@ -30,14 +30,15 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
         //toolbarHeight: 80,
         centerTitle: true,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(
-              Icons.arrow_back_ios_rounded,
-              size: 35,
-              color: ColorConst.primary,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios_rounded,
+            size: 35,
+            color: ColorConst.primary,
+          ),
+        ),
         title: Text("NewsX",
             style: GoogleFonts.abyssinicaSil(
               textStyle: TextStyle(
@@ -139,20 +140,24 @@ class _NewsViewScreenState extends State<NewsViewScreen> {
           ),
         ),
       ),
-      /* floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        onPressed: () {
-          setState(() {
-            isFavorite = !isFavorite;
-          });
-        },
-        child: Icon(
-          Icons.  ,
-          color: Colors.red,
-          size: 50,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+        child: FloatingActionButton(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          onPressed: () {
+            setState(() {
+              isFavorite = !isFavorite;
+            });
+          },
+          child: Icon(
+            isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
+            color: isFavorite ? Colors.red : Colors.red,
+            size: 70,
+          ),
         ),
-      ), */
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
     );
   }
 }

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/utilis/text_const.dart';
-import 'package:news_app/view/hs_new_ui.dart';
+import 'package:news_app/view/botttom_nav_bar_screen.dart';
 import 'package:news_app/view/user_register.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NewHomeScreen(),
+                            builder: (context) => NavBarScreen(),
                           ),
                         );
                       }
